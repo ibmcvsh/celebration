@@ -412,6 +412,50 @@
     }
 
     /* ─────────────────────────────────────────────
+       Download disclosure (<details>/<summary>)
+    ───────────────────────────────────────────── */
+    .download-disclosure {
+      margin-top: var(--spacing-06);
+      border: 1px solid var(--border-subtle);
+      background-color: var(--background);
+    }
+
+    .download-disclosure__toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-03);
+      padding: var(--spacing-04) var(--spacing-06);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--interactive);
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      transition: background-color var(--transition);
+    }
+
+    /* Remove default marker in all browsers */
+    .download-disclosure__toggle::-webkit-details-marker { display: none; }
+    .download-disclosure__toggle::marker { display: none; }
+
+    .download-disclosure__toggle:hover {
+      background-color: var(--layer);
+    }
+
+    .download-disclosure__toggle .btn__icon {
+      transition: transform var(--transition);
+    }
+
+    details[open] .download-disclosure__toggle .btn__icon {
+      transform: rotate(180deg);
+    }
+
+    .download-disclosure__body {
+      padding: var(--spacing-05) var(--spacing-06);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* ─────────────────────────────────────────────
        Video section
     ───────────────────────────────────────────── */
     .video-embed-wrapper {
@@ -657,8 +701,8 @@
               <path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/>
             </svg>
           </a>
-          <!-- Download eBook — IBM_CVS_Aetna_partnership_eBook.pdf -->
-          <a class="btn btn--ghost" href="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf" download="IBM_CVS_Aetna_partnership_eBook.pdf" aria-label="Download eBook PDF">
+          <!-- Scroll to eBook section where the download disclosure lives -->
+          <a class="btn btn--ghost" href="#ebook" aria-label="Go to eBook section to read or download">
             Download eBook <span class="file-badge" aria-label="PDF file">PDF</span>
             <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
               <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
@@ -684,49 +728,41 @@
         <p class="section__label">eBook</p>
         <h2 class="section__heading" id="ebook-heading">View or download the eBook</h2>
         <p class="section__description">
-          The eBook is embedded below for in-page reading. If your browser does not support
-          embedded PDF viewing, use the download link to access the file directly.
+          The eBook is embedded below for in-page reading.
         </p>
 
-        <!-- Embedded PDF viewer -->
+        <!-- Embedded PDF viewer — Google Docs viewer handles cross-origin PDFs -->
         <div class="ebook-viewer-wrapper">
-          <object
+          <iframe
             class="ebook-viewer"
-            data="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf"
-            type="application/pdf"
+            src="https://docs.google.com/viewer?url=https%3A%2F%2Fgithub.com%2Fibmcvsh%2Fcelebration%2Freleases%2Fdownload%2Fv1.0%2FIBM_CVS_Aetna_partnership_eBook.pdf&embedded=true"
             title="IBM CVS Aetna Partnership eBook — embedded PDF viewer"
-            aria-label="IBM CVS Aetna Partnership eBook embedded PDF viewer"
-          >
-            <!-- Fallback for browsers that cannot render PDFs inline -->
-            <div class="ebook-fallback" role="region" aria-label="PDF viewer unavailable">
-              <p>
-                Your browser does not support inline PDF viewing.
-                Use the link below to download and open the eBook.
-              </p>
-              <a class="btn btn--primary" href="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf" download="IBM_CVS_Aetna_partnership_eBook.pdf" aria-label="Download eBook PDF">
-                Download eBook PDF
-                <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-                  <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
-                </svg>
-              </a>
-            </div>
-          </object>
+            allowfullscreen
+          ></iframe>
         </div>
 
-        <!-- Primary download action -->
-        <div class="viewer-actions">
-          <a
-            class="btn btn--primary"
-            href="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf"
-            download="IBM_CVS_Aetna_partnership_eBook.pdf"
-            aria-label="Download the IBM CVS Aetna Partnership eBook PDF"
-          >
-            Download eBook <span class="file-badge" aria-label="PDF file">PDF</span>
+        <!-- Download — hidden inside a disclosure; only shown on demand -->
+        <details class="download-disclosure">
+          <summary class="download-disclosure__toggle">
+            Download eBook
             <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-              <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
+              <path d="M8 11L3 6l1.4-1.4L8 8.2l3.6-3.6L13 6z"/>
             </svg>
-          </a>
-        </div>
+          </summary>
+          <div class="download-disclosure__body">
+            <a
+              class="btn btn--primary"
+              href="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf"
+              download="IBM_CVS_Aetna_partnership_eBook.pdf"
+              aria-label="Download the IBM CVS Aetna Partnership eBook PDF"
+            >
+              Download eBook <span class="file-badge" aria-label="PDF file">PDF</span>
+              <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
+                <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
+              </svg>
+            </a>
+          </div>
+        </details>
 
       </div>
     </section>
