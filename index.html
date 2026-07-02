@@ -12,21 +12,18 @@
   <meta property="og:title"       content="CVS Health &amp; Aetna Client Resource Hub — IBM Client Engineering" />
   <meta property="og:description" content="Access the CVS Health &amp; Aetna celebration eBook and companion video." />
 
-  <!-- IBM Plex Sans via Google Fonts (subset, no tracking, no JS) -->
+  <!-- IBM Plex Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─────────────────────────────────────────────
-       Carbon-inspired design tokens
-    ───────────────────────────────────────────── */
+    /* ── Design tokens ── */
     :root {
       --background:        #ffffff;
       --background-hover:  #e8e8e8;
       --layer:             #f4f4f4;
       --layer-accent:      #e0e0e0;
-      --layer-hover:       #e8e8e8;
       --text-primary:      #161616;
       --text-secondary:    #525252;
       --text-on-color:     #ffffff;
@@ -37,589 +34,102 @@
       --focus-inset:       #ffffff;
       --border-subtle:     #e0e0e0;
       --border-strong:     #8d8d8d;
-      --support-error:     #da1e28;
       --link:              #0f62fe;
-      --link-visited:      #0f62fe;
-
-      /* CVS accent (used sparingly for logo context only) */
-      --cvs-red: #cc0000;
-
       --font-sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
-      --spacing-01: 0.125rem;
-      --spacing-02: 0.25rem;
-      --spacing-03: 0.5rem;
-      --spacing-04: 0.75rem;
-      --spacing-05: 1rem;
-      --spacing-06: 1.5rem;
-      --spacing-07: 2rem;
-      --spacing-08: 2.5rem;
-      --spacing-09: 3rem;
-      --spacing-10: 4rem;
-      --spacing-11: 5rem;
-      --spacing-12: 6rem;
-
+      --sp-02: 0.25rem; --sp-03: 0.5rem;  --sp-04: 0.75rem; --sp-05: 1rem;
+      --sp-06: 1.5rem;  --sp-07: 2rem;    --sp-08: 2.5rem;  --sp-09: 3rem;
+      --sp-10: 4rem;    --sp-11: 5rem;
       --container-max: 1312px;
       --container-padding: clamp(1rem, 5vw, 2rem);
-
-      --radius: 0; /* Carbon uses 0 radius by default */
       --transition: 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
     }
 
-    /* ─────────────────────────────────────────────
-       Reset & base
-    ───────────────────────────────────────────── */
+    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      font-size: 16px;
-      scroll-behavior: auto; /* default: respect reduced-motion preference */
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      html { scroll-behavior: smooth; }
-    }
-
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--background);
-      color: var(--text-primary);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
+    html { font-size: 16px; scroll-behavior: auto; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    body { font-family: var(--font-sans); background: var(--background); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
     img, svg { max-width: 100%; display: block; }
-    a,
-    a:visited {
-      color: var(--link);
-    }
-    /* Do NOT set a:hover color globally — it overrides white text on .btn--primary */
+    a, a:visited { color: var(--link); }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
 
-    /* ─────────────────────────────────────────────
-       Focus styles (WCAG 2.2 AA)
-    ───────────────────────────────────────────── */
-    :focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 1px;
-    }
+    /* ── Skip link ── */
+    .skip-link { position: absolute; top: -9999px; left: 0; background: var(--interactive); color: #fff; padding: var(--sp-03) var(--sp-05); font-size: 0.875rem; font-weight: 600; z-index: 9999; text-decoration: none; }
+    .skip-link:focus { top: 0; outline: 3px solid var(--focus); outline-offset: 1px; }
 
-    /* ─────────────────────────────────────────────
-       Skip link
-    ───────────────────────────────────────────── */
-    .skip-link {
-      position: absolute;
-      top: -9999px;
-      left: 0;
-      background: var(--interactive);
-      color: var(--text-on-color);
-      padding: var(--spacing-03) var(--spacing-05);
-      font-size: 0.875rem;
-      font-weight: 600;
-      z-index: 9999;
-      text-decoration: none;
-      border: 2px solid var(--focus-inset);
-    }
-    .skip-link:focus {
-      top: 0;
-      outline: 3px solid var(--focus);
-      outline-offset: 1px;
-    }
+    /* ── Layout ── */
+    .container { width: 100%; max-width: var(--container-max); margin-inline: auto; padding-inline: var(--container-padding); }
 
-    /* ─────────────────────────────────────────────
-       Layout container
-    ───────────────────────────────────────────── */
-    .container {
-      width: 100%;
-      max-width: var(--container-max);
-      margin-inline: auto;
-      padding-inline: var(--container-padding);
-    }
+    /* ── Header ── */
+    .site-header { background: var(--background); border-top: 3px solid var(--interactive); border-bottom: 1px solid var(--border-subtle); position: sticky; top: 0; z-index: 100; }
+    .site-header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 3.5rem; gap: var(--sp-05); padding-block: var(--sp-03); }
+    .brand-lockup { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .brand-logo { display: block; height: 40px; max-height: 40px; width: auto; object-fit: contain; flex-shrink: 0; }
+    @media (max-width: 671px) { .brand-lockup { gap: 0.75rem; } .brand-logo { height: 32px; max-height: 32px; } }
+    .site-header__nav { display: flex; align-items: center; }
+    .site-header__nav-link { display: inline-flex; align-items: center; height: 3rem; padding-inline: var(--sp-05); font-size: 0.875rem; font-weight: 400; color: var(--text-primary); text-decoration: none; border-bottom: 2px solid transparent; transition: background-color var(--transition); white-space: nowrap; }
+    .site-header__nav-link:hover { background: var(--background-hover); color: var(--text-primary); }
+    .site-header__nav-link:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+    @media (max-width: 671px) { .site-header__inner { flex-wrap: wrap; } .site-header__nav { flex-wrap: wrap; } .site-header__nav-link { height: auto; padding-block: var(--sp-03); } }
 
-    /* ─────────────────────────────────────────────
-       Header
-    ───────────────────────────────────────────── */
-    .site-header {
-      background-color: var(--background);
-      border-top: 3px solid var(--interactive);   /* IBM blue accent bar */
-      border-bottom: 1px solid var(--border-subtle);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+    /* ── Hero ── */
+    .hero { background: var(--layer); border-bottom: 1px solid var(--border-subtle); padding-block: var(--sp-11) var(--sp-10); }
+    .hero__eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--sp-04); }
+    .hero__heading { font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: var(--sp-05); max-width: 36ch; }
+    .hero__subheading { font-size: 1.125rem; color: var(--text-secondary); max-width: 52ch; margin-bottom: var(--sp-08); line-height: 1.6; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-04); align-items: center; }
 
-    .site-header__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 3.5rem;
-      gap: var(--spacing-05);
-      padding-block: var(--spacing-03);
-    }
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: var(--sp-03); height: 3rem; padding-inline: var(--sp-07); font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background-color var(--transition), border-color var(--transition), color var(--transition); white-space: nowrap; line-height: 1; }
+    .btn--primary, .btn--primary:visited { background: var(--interactive); color: #fff; border-color: var(--interactive); }
+    .btn--primary:hover { background: #0043ce; border-color: #0043ce; color: #fff; }
+    .btn--primary:active { background: var(--interactive-active); border-color: var(--interactive-active); color: #fff; }
+    .btn--secondary, .btn--secondary:visited { background: transparent; color: var(--interactive); border-color: var(--interactive); }
+    .btn--secondary:hover { background: var(--interactive); color: #fff; }
+    .btn--secondary:active { background: var(--interactive-active); border-color: var(--interactive-active); color: #fff; }
+    .btn--ghost, .btn--ghost:visited { background: transparent; color: var(--interactive); border-color: transparent; padding-inline: var(--sp-04); }
+    .btn--ghost:hover { background: var(--background-hover); }
+    .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+    .btn__icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: currentColor; }
+    .btn--disabled, .btn--disabled:visited { background: var(--layer-accent); color: var(--border-strong); border-color: var(--layer-accent); cursor: not-allowed; pointer-events: none; }
 
-    /* Brand lockup — CVS + Aetna + IBM logos */
-    .brand-lockup {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-shrink: 0;
-      flex-wrap: nowrap;
-    }
+    /* ── Sections ── */
+    .section { padding-block: var(--sp-10); border-bottom: 1px solid var(--border-subtle); }
+    .section--alt { background: var(--layer); }
+    .section__label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--sp-03); }
+    .section__heading { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 300; line-height: 1.25; margin-bottom: var(--sp-05); }
+    .section__description { font-size: 1rem; color: var(--text-secondary); max-width: 60ch; line-height: 1.6; margin-bottom: var(--sp-07); }
 
-    .brand-logo {
-      display: block;
-      height: 40px;
-      max-height: 40px;
-      width: auto;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
+    /* ── eBook viewer ── */
+    .ebook-viewer-wrapper { position: relative; width: 100%; background: var(--layer); border: 1px solid var(--border-subtle); overflow: hidden; }
+    .ebook-viewer { display: block; width: 100%; height: clamp(480px, 75vh, 860px); border: 0; }
+    .viewer-actions { display: flex; flex-wrap: wrap; gap: var(--sp-04); margin-top: var(--sp-06); align-items: center; }
 
+    /* ── Video ── */
+    .video-embed-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+    .video-embed-wrapper iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .video-meta { margin-top: var(--sp-05); }
+
+    /* ── Footer ── */
+    .site-footer { background: var(--layer); border-top: 1px solid var(--border-subtle); padding-block: var(--sp-08); }
+    .site-footer__inner { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--sp-06); }
+    .site-footer__brand { font-size: 0.875rem; font-weight: 600; margin-bottom: var(--sp-02); }
+    .site-footer__meta { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+    .site-footer__nav { display: flex; flex-direction: column; gap: var(--sp-02); }
+    .site-footer__nav-link { font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; transition: color var(--transition); }
+    .site-footer__nav-link:hover { color: var(--interactive); text-decoration: underline; }
+
+    /* ── Utilities ── */
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+    .file-badge { display: inline-block; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-strong); padding: 0 var(--sp-02); line-height: 1.6; vertical-align: middle; margin-left: var(--sp-02); }
+    .btn--primary .file-badge, .btn--primary:hover .file-badge, .btn--primary:active .file-badge, .btn--primary:visited .file-badge { color: #fff; border-color: rgba(255,255,255,0.6); }
+    .btn--secondary .file-badge { color: inherit; border-color: currentColor; }
+    .divider { border: 0; border-top: 1px solid var(--border-subtle); margin-block: var(--sp-07); }
+
+    /* ── Responsive ── */
     @media (max-width: 671px) {
-      .brand-lockup { gap: 0.75rem; }
-      .brand-logo { height: 32px; max-height: 32px; }
-    }
-
-    .site-header__nav {
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .site-header__nav-link {
-      display: inline-flex;
-      align-items: center;
-      height: 3rem;
-      padding-inline: var(--spacing-05);
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: background-color var(--transition), border-color var(--transition);
-      white-space: nowrap;
-    }
-
-    .site-header__nav-link:hover {
-      background-color: var(--background-hover);
-      color: var(--text-primary);
-    }
-
-    .site-header__nav-link:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: -3px;
-    }
-
-    /* Mobile nav collapse */
-    @media (max-width: 671px) {
-      .site-header__inner { height: auto; flex-wrap: wrap; padding-block: var(--spacing-03); }
-      .site-header__nav { flex-wrap: wrap; }
-      .site-header__nav-link { height: auto; padding-block: var(--spacing-03); }
-    }
-
-    /* ─────────────────────────────────────────────
-       Hero
-    ───────────────────────────────────────────── */
-    .hero {
-      background-color: var(--layer);
-      border-bottom: 1px solid var(--border-subtle);
-      padding-block: var(--spacing-11) var(--spacing-10);
-    }
-
-    .hero__eyebrow {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-04);
-    }
-
-    .hero__heading {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 300;
-      line-height: 1.2;
-      color: var(--text-primary);
-      margin-bottom: var(--spacing-05);
-      max-width: 36ch;
-    }
-
-    .hero__subheading {
-      font-size: 1.125rem;
-      font-weight: 400;
-      color: var(--text-secondary);
-      max-width: 52ch;
-      margin-bottom: var(--spacing-08);
-      line-height: 1.6;
-    }
-
-    .hero__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--spacing-04);
-      align-items: center;
-    }
-
-    /* ─────────────────────────────────────────────
-       Buttons — Carbon style
-    ───────────────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--spacing-03);
-      height: 3rem;
-      padding-inline: var(--spacing-07);
-      font-family: var(--font-sans);
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: background-color var(--transition), border-color var(--transition), color var(--transition);
-      white-space: nowrap;
-      line-height: 1;
-    }
-
-    .btn--primary,
-    .btn--primary:visited {
-      background-color: var(--interactive);
-      color: var(--text-on-color);
-      border-color: var(--interactive);
-    }
-    .btn--primary:hover {
-      background-color: #0043ce;
-      border-color: #0043ce;
-      color: var(--text-on-color);
-    }
-    .btn--primary:active {
-      background-color: var(--interactive-active);
-      border-color: var(--interactive-active);
-      color: var(--text-on-color);
-    }
-
-    .btn--secondary,
-    .btn--secondary:visited {
-      background-color: transparent;
-      color: var(--interactive);
-      border-color: var(--interactive);
-    }
-    .btn--secondary:hover {
-      background-color: var(--interactive);
-      color: var(--text-on-color);
-    }
-    .btn--secondary:active {
-      background-color: var(--interactive-active);
-      border-color: var(--interactive-active);
-      color: var(--text-on-color);
-    }
-
-    .btn--ghost,
-    .btn--ghost:visited {
-      background-color: transparent;
-      color: var(--interactive);
-      border-color: transparent;
-      padding-inline: var(--spacing-04);
-    }
-    .btn--ghost:hover {
-      background-color: var(--background-hover);
-      color: var(--interactive);
-    }
-
-    .btn:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 1px;
-    }
-
-    /* Icon suffix SVG inside buttons */
-    .btn__icon {
-      width: 1rem;
-      height: 1rem;
-      flex-shrink: 0;
-      fill: currentColor;
-    }
-
-    /* ─────────────────────────────────────────────
-       Sections — shared
-    ───────────────────────────────────────────── */
-    .section {
-      padding-block: var(--spacing-10);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .section--alt {
-      background-color: var(--layer);
-    }
-
-    .section__label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-03);
-    }
-
-    .section__heading {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 300;
-      line-height: 1.25;
-      color: var(--text-primary);
-      margin-bottom: var(--spacing-05);
-    }
-
-    .section__description {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      max-width: 60ch;
-      line-height: 1.6;
-      margin-bottom: var(--spacing-07);
-    }
-
-    /* ─────────────────────────────────────────────
-       eBook section
-    ───────────────────────────────────────────── */
-    .ebook-viewer-wrapper {
-      position: relative;
-      width: 100%;
-      background-color: var(--layer);
-      border: 1px solid var(--border-subtle);
-      overflow: hidden;
-    }
-
-    .ebook-viewer {
-      display: block;
-      width: 100%;
-      height: clamp(480px, 75vh, 860px);
-      border: 0;
-    }
-
-    .ebook-fallback {
-      padding: var(--spacing-07);
-      text-align: center;
-      background-color: var(--layer);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .ebook-fallback p {
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-05);
-    }
-
-    .viewer-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--spacing-04);
-      margin-top: var(--spacing-06);
-      align-items: center;
-    }
-
-    /* ─────────────────────────────────────────────
-       Download disclosure (<details>/<summary>)
-    ───────────────────────────────────────────── */
-    .download-disclosure {
-      margin-top: var(--spacing-06);
-      border: 1px solid var(--border-subtle);
-      background-color: var(--background);
-    }
-
-    .download-disclosure__toggle {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-03);
-      padding: var(--spacing-04) var(--spacing-06);
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--interactive);
-      cursor: pointer;
-      list-style: none;
-      user-select: none;
-      transition: background-color var(--transition);
-    }
-
-    /* Remove default marker in all browsers */
-    .download-disclosure__toggle::-webkit-details-marker { display: none; }
-    .download-disclosure__toggle::marker { display: none; }
-
-    .download-disclosure__toggle:hover {
-      background-color: var(--layer);
-    }
-
-    .download-disclosure__toggle .btn__icon {
-      transition: transform var(--transition);
-    }
-
-    details[open] .download-disclosure__toggle .btn__icon {
-      transform: rotate(180deg);
-    }
-
-    .download-disclosure__body {
-      padding: var(--spacing-05) var(--spacing-06);
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    /* ─────────────────────────────────────────────
-       Video section
-    ───────────────────────────────────────────── */
-    .video-embed-wrapper {
-      position: relative;
-      width: 100%;
-      /* max-width matches the eBook viewer: both fill the full .container column (--container-max: 1312px) with no additional cap */
-      aspect-ratio: 16 / 9;
-      background: #000;
-    }
-
-    .video-embed-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
-
-    .video-meta {
-      margin-top: var(--spacing-05);
-    }
-
-    /* Transcript */
-    .transcript-container {
-      margin-top: var(--spacing-07);
-      border: 1px solid var(--border-subtle);
-      background-color: var(--layer);
-    }
-
-    .transcript-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--spacing-05) var(--spacing-06);
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .transcript-header h3 {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .transcript-body {
-      padding: var(--spacing-06);
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    /* ─────────────────────────────────────────────
-       Footer
-    ───────────────────────────────────────────── */
-    .site-footer {
-      background-color: var(--layer);
-      border-top: 1px solid var(--border-subtle);
-      padding-block: var(--spacing-08);
-    }
-
-    .site-footer__inner {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--spacing-06);
-    }
-
-    .site-footer__brand {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: var(--spacing-02);
-    }
-
-    .site-footer__meta {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .site-footer__nav {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-02);
-    }
-
-    .site-footer__nav-link {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-
-    .site-footer__nav-link:hover {
-      color: var(--interactive);
-      text-decoration: underline;
-    }
-
-    /* Disabled-state for placeholder download buttons */
-    .btn--disabled,
-    .btn--disabled:visited {
-      background-color: var(--layer-accent);
-      color: var(--border-strong);
-      border-color: var(--layer-accent);
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    /* ─────────────────────────────────────────────
-       Divider
-    ───────────────────────────────────────────── */
-    .divider {
-      border: 0;
-      border-top: 1px solid var(--border-subtle);
-      margin-block: var(--spacing-07);
-    }
-
-    /* ─────────────────────────────────────────────
-       Utility
-    ───────────────────────────────────────────── */
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-
-    /* ─────────────────────────────────────────────
-       Inline download badge (file type indicator)
-    ───────────────────────────────────────────── */
-    .file-badge {
-      display: inline-block;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-strong);
-      padding: 0 var(--spacing-02);
-      line-height: 1.6;
-      vertical-align: middle;
-      margin-left: var(--spacing-02);
-    }
-
-    /* File badge on blue (primary) buttons — must be white to pass contrast */
-    .btn--primary .file-badge,
-    .btn--primary:hover .file-badge,
-    .btn--primary:active .file-badge,
-    .btn--primary:visited .file-badge {
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.6);
-    }
-
-    /* ─────────────────────────────────────────────
-       Responsive tweaks
-    ───────────────────────────────────────────── */
-    @media (max-width: 671px) {
-      .hero { padding-block: var(--spacing-09) var(--spacing-08); }
-      .section { padding-block: var(--spacing-08); }
-      .card { padding: var(--spacing-06); }
+      .hero { padding-block: var(--sp-09) var(--sp-08); }
+      .section { padding-block: var(--sp-08); }
       .viewer-actions { flex-direction: column; align-items: flex-start; }
       .site-footer__inner { flex-direction: column; }
     }
@@ -627,58 +137,29 @@
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════
-       Skip navigation link
-  ══════════════════════════════════════════ -->
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <!-- ══════════════════════════════════════════
-       Header
-  ══════════════════════════════════════════ -->
+  <!-- ── Header ── -->
   <header class="site-header" role="banner">
     <div class="container">
       <div class="site-header__inner">
-
-        <!-- Brand lockup: CVS Health logo, Aetna logo, IBM logo -->
         <div class="brand-lockup" aria-label="CVS Health, Aetna, and IBM">
-          <!-- CVS logo: CVS_Health_logo.svg -->
-          <img
-            class="brand-logo"
-            src="CVS_Health_logo.svg"
-            alt="CVS Health logo"
-          />
-          <!-- Aetna logo: Aetna_logo_reg_rgb_vio.png -->
-          <img
-            class="brand-logo"
-            src="Aetna_logo_reg_rgb_vio.png"
-            alt="Aetna logo"
-          />
-          <!-- IBM logo: IBM_logo_pos_blue60_RGB.jpg -->
-          <img
-            class="brand-logo"
-            src="IBM_logo_pos_blue60_RGB.jpg"
-            alt="IBM logo"
-          />
+          <img class="brand-logo" src="CVS_Health_logo.svg"          alt="CVS Health logo" />
+          <img class="brand-logo" src="Aetna_logo_reg_rgb_vio.png"   alt="Aetna logo" />
+          <img class="brand-logo" src="IBM_logo_pos_blue60_RGB.jpg"  alt="IBM logo" />
         </div>
-
-        <!-- Primary navigation -->
         <nav class="site-header__nav" aria-label="Primary navigation">
           <a class="site-header__nav-link" href="#ebook">eBook</a>
           <a class="site-header__nav-link" href="#video">Video</a>
         </nav>
-
       </div>
     </div>
   </header>
 
-  <!-- ══════════════════════════════════════════
-       Main content
-  ══════════════════════════════════════════ -->
+  <!-- ── Main ── -->
   <main id="main-content" tabindex="-1">
 
-    <!-- ────────────────────────────────────────
-         Hero
-    ──────────────────────────────────────── -->
+    <!-- Hero -->
     <section class="hero" aria-labelledby="hero-heading">
       <div class="container">
         <p class="hero__eyebrow">IBM Client Engineering × CVS Health &amp; Aetna</p>
@@ -691,46 +172,36 @@
         <div class="hero__actions">
           <a class="btn btn--primary" href="#ebook">
             View eBook
-            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-              <path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/>
-            </svg>
+            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/></svg>
           </a>
           <a class="btn btn--secondary" href="#video">
             Watch Video
-            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-              <path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/>
-            </svg>
+            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/></svg>
           </a>
           <a class="btn btn--secondary" href="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf" download="IBM_CVS_Aetna_partnership_eBook.pdf" aria-label="Download eBook PDF">
             Download eBook <span class="file-badge" aria-label="PDF file">PDF</span>
-            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-              <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
-            </svg>
+            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
           </a>
-          <!-- Download Video: disabled until REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL is set -->
-          <a class="btn btn--secondary btn--disabled" href="REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL" download="CVS-Health-Aetna-IBM-video.mp4" aria-label="Download Video MP4 — coming soon" aria-disabled="true" tabindex="-1">
+          <!-- Download Video: placeholder until direct MP4 URL is available -->
+          <a class="btn btn--secondary btn--disabled" href="#" aria-label="Download Video — coming soon" aria-disabled="true" tabindex="-1">
             Download Video <span class="file-badge" aria-label="MP4 file">MP4</span>
-            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-              <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
-            </svg>
+            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ────────────────────────────────────────
-         eBook section
-         Asset: https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf
-    ──────────────────────────────────────── -->
+    <!-- eBook -->
     <section class="section section--alt" id="ebook" aria-labelledby="ebook-heading">
       <div class="container">
         <p class="section__label">eBook</p>
         <h2 class="section__heading" id="ebook-heading">View or download the eBook</h2>
         <p class="section__description">
           The eBook is embedded below for in-page reading.
+          If your browser does not support embedded PDF viewing, use the download button below.
         </p>
 
-        <!-- Embedded PDF viewer — Google Docs viewer reliably renders cross-origin PDFs -->
+        <!-- Google Docs viewer renders the cross-origin PDF reliably in all browsers -->
         <div class="ebook-viewer-wrapper">
           <iframe
             class="ebook-viewer"
@@ -740,7 +211,6 @@
           ></iframe>
         </div>
 
-        <!-- Download action -->
         <div class="viewer-actions">
           <a
             class="btn btn--primary"
@@ -749,21 +219,13 @@
             aria-label="Download the IBM CVS Aetna Partnership eBook PDF"
           >
             Download eBook <span class="file-badge" aria-label="PDF file">PDF</span>
-            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-              <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
-            </svg>
+            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
           </a>
         </div>
-
       </div>
     </section>
 
-    <!-- ────────────────────────────────────────
-         Video section
-         Embed: https://video.ibm.com/embed/recorded/134895235
-         Download: Replace REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL with the
-                   final direct downloadable MP4 or file URL when available.
-    ──────────────────────────────────────── -->
+    <!-- Video -->
     <section class="section" id="video" aria-labelledby="video-heading">
       <div class="container">
         <p class="section__label">Video</p>
@@ -773,13 +235,10 @@
           When available, use the download button to save a local copy.
         </p>
 
-        <!-- IBM video embed — for watching on-page only.
-             Do NOT use this iframe URL for the Download Video buttons. -->
         <div class="video-embed-wrapper">
           <iframe
             src="https://video.ibm.com/embed/recorded/134895235"
             title="Celebrating CVS Health and Aetna's relationship with IBM video"
-            style="border: 0;"
             webkitallowfullscreen
             allowfullscreen
             frameborder="no"
@@ -789,20 +248,17 @@
 
         <div class="video-meta">
           <div class="viewer-actions">
-            <!-- Download Video: disabled until REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL is set -->
-              <a
-                class="btn btn--primary btn--disabled"
-                href="REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL"
-                download="CVS-Health-Aetna-IBM-video.mp4"
-                aria-label="Download Video — coming soon"
-                aria-disabled="true"
-                tabindex="-1"
-              >
-                Download Video <span class="file-badge" aria-label="MP4 file">MP4</span>
-                <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-                  <path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/>
-                </svg>
-              </a>
+            <!-- Download Video: replace href with direct MP4 URL when available, then remove btn--disabled -->
+            <a
+              class="btn btn--primary btn--disabled"
+              href="#"
+              aria-label="Download Video — coming soon"
+              aria-disabled="true"
+              tabindex="-1"
+            >
+              Download Video <span class="file-badge" aria-label="MP4 file">MP4</span>
+              <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
+            </a>
           </div>
         </div>
 
@@ -811,9 +267,7 @@
 
   </main>
 
-  <!-- ══════════════════════════════════════════
-       Footer
-  ══════════════════════════════════════════ -->
+  <!-- ── Footer ── -->
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="site-footer__inner">
@@ -834,64 +288,7 @@
   </footer>
 
   <script>
-    // Set current year in footer dynamically
     document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-    // ─────────────────────────────────────────────────────────────────────
-    // Force file download via fetch → Blob → temporary anchor.
-    // This bypasses the browser's built-in PDF/video viewer even when the
-    // server does not send a Content-Disposition: attachment header.
-    // ─────────────────────────────────────────────────────────────────────
-    async function forceDownload(fileUrl, fileName) {
-      try {
-        const response = await fetch(fileUrl);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        // Small delay before revoking so the browser has time to start the download
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-      } catch (err) {
-        // fetch failed (e.g. CORS, offline) — fall back to plain navigation download
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    }
-
-    // Attach to all download-ebook buttons
-    document.querySelectorAll('a[download="IBM_CVS_Aetna_partnership_eBook.pdf"]')
-      .forEach(function (btn) {
-        btn.addEventListener('click', function (event) {
-          event.preventDefault();
-          forceDownload(
-            'https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf',
-            'CVS-Health-Aetna-IBM-eBook.pdf'
-          );
-        });
-      });
-
-    // Attach to all download-video buttons
-    // Update the file URL below once REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL is known.
-    document.querySelectorAll('a[download="CVS-Health-Aetna-IBM-video.mp4"]')
-      .forEach(function (btn) {
-        btn.addEventListener('click', function (event) {
-          // Only trigger forceDownload once the placeholder URL has been replaced
-          if (btn.getAttribute('href') === 'REPLACE_WITH_DIRECT_VIDEO_DOWNLOAD_URL') return;
-          event.preventDefault();
-          forceDownload(
-            btn.getAttribute('href'),
-            'CVS-Health-Aetna-IBM-video.mp4'
-          );
-        });
-      });
   </script>
 
 </body>
