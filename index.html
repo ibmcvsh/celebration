@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CVS Health &amp; Aetna Client Resource Hub — IBM Client Engineering</title>
-  <meta name="description" content="Access the CVS Health &amp; Aetna celebration eBook and companion video. View or download your resources." />
+  <meta name="description" content="Explore the CVS Health &amp; Aetna celebration eBook and companion video from IBM Client Engineering." />
   <meta name="theme-color" content="#0f62fe" />
 
   <!-- Open Graph / social sharing -->
@@ -91,7 +91,6 @@
     .btn--ghost:hover { background: var(--background-hover); }
     .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
     .btn__icon { width: 1rem; height: 1rem; flex-shrink: 0; fill: currentColor; }
-    .btn--disabled, .btn--disabled:visited { background: var(--layer-accent); color: var(--border-strong); border-color: var(--layer-accent); cursor: not-allowed; pointer-events: none; }
 
     /* ── Sections ── */
     .section { padding-block: var(--sp-10); border-bottom: 1px solid var(--border-subtle); }
@@ -108,7 +107,6 @@
     /* ── Video ── */
     .video-embed-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
     .video-embed-wrapper iframe { width: 100%; height: 100%; border: 0; display: block; }
-    .video-meta { margin-top: var(--sp-05); }
 
     /* ── Footer ── */
     .site-footer { background: var(--layer); border-top: 1px solid var(--border-subtle); padding-block: var(--sp-08); }
@@ -146,7 +144,7 @@
         <div class="brand-lockup" aria-label="CVS Health, Aetna, and IBM">
           <img class="brand-logo" src="CVS_Health_logo.svg"          alt="CVS Health logo" />
           <img class="brand-logo" src="Aetna_logo_reg_rgb_vio.png"   alt="Aetna logo" />
-          <img class="brand-logo" src="IBM_logo_pos_blue60_RGB.jpg"  alt="IBM logo" />
+          <img class="brand-logo" src="IBM_logo®_pos_blue60_RGB.jpg"  alt="IBM logo" />
         </div>
         <nav class="site-header__nav" aria-label="Primary navigation">
           <a class="site-header__nav-link" href="#ebook">eBook</a>
@@ -165,26 +163,20 @@
         <p class="hero__eyebrow">IBM Client Engineering × CVS Health &amp; Aetna</p>
         <h1 class="hero__heading" id="hero-heading">Celebrating CVS Health &amp; Aetna&#8217;s relationship with IBM</h1>
         <p class="hero__subheading">
-          Explore and download the celebration assets created for CVS Health &amp; Aetna —
-          an eBook and video that highlight the strength of this partnership with IBM.
-          Both are available to view directly on this page and to save for offline use.
+          Explore the celebration assets created for CVS Health &amp; Aetna —
+          an eBook and video that highlight the strength of the CVS Health &amp; Aetna partnership with IBM.
         </p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="#ebook">
             View eBook
             <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/></svg>
           </a>
-          <a class="btn btn--secondary" href="#video">
+          <a class="btn btn--primary" href="#video">
             Watch Video
             <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M5.52 1L4.46 2.06 10.4 8l-5.94 5.94L5.52 15 12.52 8z"/></svg>
           </a>
           <a class="btn btn--secondary" href="https://github.com/ibmcvsh/celebration/releases/download/v1.0/IBM_CVS_Aetna_partnership_eBook.pdf" download="IBM_CVS_Aetna_partnership_eBook.pdf" aria-label="Download eBook PDF">
             Download eBook <span class="file-badge" aria-label="PDF file">PDF</span>
-            <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
-          </a>
-          <!-- Download Video: placeholder until direct MP4 URL is available -->
-          <a class="btn btn--secondary btn--disabled" href="#" aria-label="Download Video — coming soon" aria-disabled="true" tabindex="-1">
-            Download Video <span class="file-badge" aria-label="MP4 file">MP4</span>
             <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
           </a>
         </div>
@@ -229,10 +221,9 @@
     <section class="section" id="video" aria-labelledby="video-heading">
       <div class="container">
         <p class="section__label">Video</p>
-        <h2 class="section__heading" id="video-heading">Watch or download the video</h2>
+        <h2 class="section__heading" id="video-heading">Watch the video</h2>
         <p class="section__description">
           Watch the celebration video in-page using the embedded player below.
-          When available, use the download button to save a local copy.
         </p>
 
         <div class="video-embed-wrapper">
@@ -243,22 +234,6 @@
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
-        </div>
-
-        <div class="video-meta">
-          <div class="viewer-actions">
-            <!-- Download Video: replace href with direct MP4 URL when available, then remove btn--disabled -->
-            <a
-              class="btn btn--primary btn--disabled"
-              href="#"
-              aria-label="Download Video — coming soon"
-              aria-disabled="true"
-              tabindex="-1"
-            >
-              Download Video <span class="file-badge" aria-label="MP4 file">MP4</span>
-              <svg class="btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M8 10.94L3.03 5.97l1.06-1.06L7 7.88V1h2v6.88l2.91-2.97 1.06 1.06L8 10.94zM2 13h12v2H2z"/></svg>
-            </a>
-          </div>
         </div>
 
       </div>
